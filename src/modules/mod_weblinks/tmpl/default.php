@@ -36,9 +36,12 @@ defined('_JEXEC') or die;
 			<ul class="weblinks<?php echo $moduleclass_sfx; ?>">
 				<?php foreach ($items as $item) : ?>
 					<li>
-						<?php $link = $item->link; ?>
 						<?php
-						switch ($item->params->get('target', 3))
+						$link   = $item->link;
+						$width  = (int) $item->params->get('width', 600);
+						$height = (int) $item->params->get('height', 500);
+
+						switch ($item->params->get('target', 0))
 						{
 							case 1:
 								// Open in a new window
@@ -49,6 +52,13 @@ defined('_JEXEC') or die;
 							case 2:
 								// Open in a popup window
 								echo "<a href=\"#\" onclick=\"window.open('" . $link . "', '', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=550'); return false\">" .
+									htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8') . '</a>';
+								break;
+
+								case 3:
+								// Open in a modal window
+								JHtml::_('behavior.modal', 'a.modal');
+								echo '<a class="modal" href="' . $link . '"  rel="{handler: \'iframe\', size: {x:' . $width . ', y:' . $height . '}}">' .
 									htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8') . '</a>';
 								break;
 
@@ -80,9 +90,12 @@ defined('_JEXEC') or die;
 	<ul class="weblinks<?php echo $moduleclass_sfx; ?>">
 		<?php foreach ($list as $item) : ?>
 			<li>
-				<?php $link = $item->link; ?>
 				<?php
-				switch ($item->params->get('target', 3))
+				$link   = $item->link;
+				$width  = (int) $item->params->get('width', 600);
+				$height = (int) $item->params->get('height', 500);
+
+				switch ($item->params->get('target', 0))
 				{
 					case 1:
 						// Open in a new window
@@ -93,6 +106,13 @@ defined('_JEXEC') or die;
 					case 2:
 						// Open in a popup window
 						echo "<a href=\"#\" onclick=\"window.open('" . $link . "', '', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=550'); return false\">" .
+							htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8') . '</a>';
+						break;
+					
+					case 3:
+						// Open in a modal window
+						JHtml::_('behavior.modal', 'a.modal');
+						echo '<a class="modal" href="' . $link . '"  rel="{handler: \'iframe\', size: {x:' . $width . ', y:' . $height . '}}">' .
 							htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8') . '</a>';
 						break;
 

@@ -95,8 +95,14 @@ class ModWeblinksHelper
 
 		if ($items)
 		{
+			$cParams = JComponentHelper::getParams('com_weblinks');
+
 			foreach ($items as $item)
 			{
+				$temp         = $item->params;
+				$item->params = clone $cParams;
+				$item->params->merge($temp);
+
 				if ($item->params->get('count_clicks', $params->get('count_clicks')) == 1)
 				{
 					$item->link	= JRoute::_('index.php?option=com_weblinks&task=weblink.go&catid=' . $item->catslug . '&id=' . $item->slug);
